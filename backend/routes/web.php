@@ -69,3 +69,8 @@ Route::post('/login', [AuthController::class, 'login'])->name('login');
 Route::get('/users', function () {
     return view('users');
 });
+
+// Admin page route
+Route::get('/admin', function () {
+    return view('admin');
+})->name('admin');

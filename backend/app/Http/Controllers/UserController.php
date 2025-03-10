@@ -281,5 +281,27 @@ class UserController extends Controller
             ], 500);
         }
     }
-
+    public function getUserById($id)
+    {
+        try {
+            $user = User::find($id);
+    
+            if (!$user) {
+                return response()->json([
+                    'message' => 'المستخدم غير موجود'
+                ], 404);
+            }
+    
+            return response()->json([
+                'message' => 'تم جلب بيانات المستخدم بنجاح',
+                'user' => $user
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => 'حدثت مشكلة أثناء جلب البيانات',
+                'message' => $e->getMessage()
+            ], 500);
+        }
+    }
+    
 }

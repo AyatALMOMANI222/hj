@@ -18,6 +18,7 @@ use Laravel\Sanctum\Sanctum;
 
 Route::post('/register', action: [UserController::class, 'store']);
 Route::post('/login', action: [AuthController::class, 'login']);
+Route::get('/user/profile', [AuthController::class, 'userProfile'])->middleware('auth:sanctum');
 Route::post('/users', action: [UserController::class, 'getUsers']);
 Route::delete('/user/{id}',action:[UserController::class , 'destroy'])->middleware(['auth:sanctum','admin']);
 // Route::delete('/floor/delete/{id}', [StandardBoothPackageController::class, 'deleteById'])->middleware(['auth:sanctum', 'admin']);

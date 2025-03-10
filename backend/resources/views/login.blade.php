@@ -172,6 +172,13 @@
                     localStorage.setItem('token', data.token); // Save token here
 
                     toastr.success(data.message); // Display success toast
+                    console.log(data.user.is_admin);
+                    if (data.user.is_admin == 1) {
+        window.location.href = "{{ route('admin') }}"; // توجيه الأدمن إلى لوحة التحكم
+    } else {
+        window.location.href = "{{ route('register.view') }}"; // توجيه المستخدم العادي إلى الصفحة الرئيسية
+    }
+                    
                 } else {
                     toastr.error(data.message); // Display error toast
                 }
