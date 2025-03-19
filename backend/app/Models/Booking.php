@@ -12,7 +12,6 @@ class Booking extends Model
     protected $table = 'booking';
 
     protected $fillable = [
-        'driving_lessons_id',
         'trainee_id',
         'status',
         'payment_status',
@@ -21,6 +20,11 @@ class Booking extends Model
         'notes',
         'trainer_notes',
         'is_reminded',
+        'trainer_id',
+        'date',
+        'time',
+        'day',
+        'starting_location'
     ];
     protected $dates = ['created_at', 'updated_at'];
 
@@ -30,8 +34,12 @@ class Booking extends Model
         return $this->belongsTo(DrivingLesson::class, 'driving_lessons_id');
     }
 
-    public function trainee()
+    // public function trainee()
+    // {
+    //     return $this->belongsTo(User::class, 'trainee_id');
+    // }
+    public function trainer()
     {
-        return $this->belongsTo(User::class, 'trainee_id');
+        return $this->belongsTo(User::class, 'trainer_id');
     }
 }

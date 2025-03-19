@@ -1,0 +1,215 @@
+/* Global Styling */
+body {
+    font-family: 'Cairo', sans-serif;
+    background-color: #f8f9fa;
+}
+
+.trainer-container {
+    padding: 20px;
+}
+
+/* Welcome Banner */
+.welcome-banner {
+    background: linear-gradient(135deg, #4e73df 0%, #224abe 100%);
+    color: white;
+    border-radius: 12px;
+}
+
+.welcome-title {
+    font-weight: 700;
+    font-size: 2rem;
+}
+
+.welcome-subtitle {
+    font-size: 1.1rem;
+    opacity: 0.9;
+}
+
+.current-date-card {
+    background-color: rgba(255, 255, 255, 0.2);
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 500;
+}
+
+/* Card Styling */
+.card {
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 0.15rem 1.75rem 0 rgba(34, 39, 46, 0.1);
+    margin-bottom: 24px;
+}
+
+.card-title {
+    font-weight: 600;
+    color: #4e73df;
+}
+
+/* Form Styling */
+.form-label {
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+.form-select, .form-control {
+    border-radius: 8px;
+    padding: 0.6rem 1rem;
+    border: 1px solid #e3e6f0;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.form-select:focus, .form-control:focus {
+    border-color: #bac8f3;
+    box-shadow: 0 0 0 0.25rem rgba(78, 115, 223, 0.25);
+}
+
+/* Button Styling */
+.btn-primary {
+    background-color: #4e73df;
+    border-color: #4e73df;
+    font-weight: 600;
+    padding: 0.6rem 1.5rem;
+    border-radius: 8px;
+}
+
+.btn-primary:hover {
+    background-color: #2e59d9;
+    border-color: #2653d4;
+}
+
+.btn-secondary {
+    background-color: #858796;
+    border-color: #858796;
+    font-weight: 600;
+    padding: 0.6rem 1.5rem;
+    border-radius: 8px;
+}
+
+/* Trainer Card Styling */
+.trainer-card {
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    height: 100%;
+}
+
+.trainer-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.15);
+}
+
+.trainer-image {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #fff;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+}
+
+.trainer-name {
+    font-weight: 700;
+    font-size: 1.2rem;
+    color: #4e73df;
+}
+
+.trainer-info {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.info-badge {
+    display: inline-flex;
+    align-items: center;
+    background-color: #f8f9fa;
+    padding: 5px 10px;
+    border-radius: 20px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    font-size: 0.85rem;
+}
+
+.info-badge i {
+    margin-left: 5px;
+    color: #4e73df;
+}
+
+.rating-stars {
+    color: #ffc107;
+    font-size: 1.1rem;
+}
+
+.view-profile-btn {
+    width: 100%;
+    background-color: #4e73df;
+    color: white;
+    border: none;
+    padding: 8px;
+    border-radius: 8px;
+    transition: all 0.3s;
+}
+
+.view-profile-btn:hover {
+    background-color: #2e59d9;
+}
+
+/* Book session button */
+.book-session-btn {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 16px;
+    font-size: 14px;
+    width: 100%;
+    margin-top: 8px !important;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.book-session-btn:hover {
+    background-color: #218838;
+    color: white;
+}
+
+/* Loading and Error States */
+.loading-state, .no-results-state, .error-state {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 300px;
+    width: 100%;
+}
+
+.spinner-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.spinner {
+    width: 50px;
+    height: 50px;
+    border: 5px solid #f3f3f3;
+    border-top: 5px solid #4e73df;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 15px;
+}
+
+.state-content {
+    text-align: center;
+    padding: 20px;
+}
+
+.state-content i {
+    color: #4e73df;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+} 

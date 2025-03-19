@@ -42,7 +42,12 @@ class User extends Authenticatable implements MustVerifyEmail
         'is_active',
         'profile_picture',
         'center_location',
-        'center_name'
+        'center_name',
+        'available_from',
+        'available_to',
+        'break_time_duration',
+        'lesson_duration',
+        'available_days'
     ];
 
     protected $hidden = [

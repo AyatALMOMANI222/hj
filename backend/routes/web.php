@@ -70,7 +70,49 @@ Route::get('/users', function () {
     return view('users');
 });
 
+// Profile Route
+Route::get('/profile', function () {
+    return view('profile');
+})->name('profile');
+
+// Update Profile Route
+Route::get('/update-profile', function () {
+    return view('update');
+})->name('update.profile');
+
+// Notifications Route
+Route::get('/notifications', function () {
+    return view('AllNotification');
+})->name('notifications');
+
 // Admin page route
 Route::get('/admin', function () {
     return view('admin');
 })->name('admin');
+
+// User Profile Route
+Route::get('/user/{id}', function($id) {
+    return view('oneUser', ['id' => $id]);
+})->name('user.profile');
+
+Route::get('/trainers', function () {
+    return view('trainer');
+})->name('trainers');
+
+// User Update API Route
+// Route::post('/api/user/update/{id}', [UserController::class, 'update'])->name('user.update');
+
+// Home page route
+Route::get('/', function () {
+    return view('home');
+})->name('home');
+
+// Add booking routes
+Route::get('/book-session/{trainerId}', function ($trainerId) {
+    return view('booking', ['trainer_id' => $trainerId]);
+})->name('booking.form');
+
+// Available booking sessions page
+Route::get('/available-sessions/{trainerId}', function ($trainerId) {
+    return view('available_sessions', ['trainer_id' => $trainerId]);
+})->name('available.sessions');

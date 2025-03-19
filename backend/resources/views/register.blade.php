@@ -1,6 +1,13 @@
 @extends('app')
 
 @section('content')
+<style>
+    /* Hide notification icon and drawer toggle on register page */
+    .notification-icon, 
+    .drawer-toggle {
+        display: none !important;
+    }
+</style>
 <div class="register-container d-flex justify-content-center align-items-center" style="min-height: 100vh; background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);">
     <div class="card shadow-lg p-5 rounded-4" style="width: 100%; max-width: 650px; background-color: #ffffff; border: none; margin: 15px 0;">
         <div class="text-center mb-4">
@@ -270,7 +277,12 @@
                     <div class="col-md-6 mb-3">
                         <div class="input-group">
                             <span class="input-group-text border-start-0"><i class="fas fa-language"></i></span>
-                            <input type="text" name="language" class="form-control border-end-0" placeholder="اللغة المتحدثة" value="{{ old('language') }}">
+                            <select name="language" class="form-select border-end-0">
+                                <option value="">اختر اللغة</option>
+                                <option value="arabic" {{ old('language') == 'arabic' ? 'selected' : '' }}>العربية</option>
+                                <option value="english" {{ old('language') == 'english' ? 'selected' : '' }}>الإنجليزية</option>
+                                <option value="french" {{ old('language') == 'french' ? 'selected' : '' }}>الفرنسية</option>
+                            </select>
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
@@ -288,6 +300,8 @@
                             <option value="">اختر نوع التدريب</option>
                             <option value="beginner" {{ old('training_type') == 'beginner' ? 'selected' : '' }}>مبتدئ</option>
                             <option value="advanced" {{ old('training_type') == 'advanced' ? 'selected' : '' }}>متقدم</option>
+                            <option value="highway_driving" {{ old('training_type') == 'highway_driving' ? 'selected' : '' }}>قيادة على الطرق السريعة</option>
+                            <option value="city_driving" {{ old('training_type') == 'city_driving' ? 'selected' : '' }}>قيادة في المدينة</option>
                         </select>
                     </div>
                 </div>
@@ -295,7 +309,15 @@
                 <div class="mb-3">
                     <div class="input-group">
                         <span class="input-group-text border-start-0"><i class="fas fa-car"></i></span>
-                        <input type="text" name="car_type" class="form-control border-end-0" placeholder="أدخل نوع وطراز السيارة" value="{{ old('car_type') }}">
+                        <select name="car_type" class="form-select border-end-0">
+                            <option value="">اختر نوع السيارة</option>
+                            <option value="sedan" {{ old('car_type') == 'sedan' ? 'selected' : '' }}>سيدان</option>
+                            <option value="suv" {{ old('car_type') == 'suv' ? 'selected' : '' }}>دفع رباعي</option>
+                            <option value="truck" {{ old('car_type') == 'truck' ? 'selected' : '' }}>شاحنة</option>
+                            <option value="manual" {{ old('car_type') == 'manual' ? 'selected' : '' }}>ناقل عادي</option>
+                            <option value="automatic" {{ old('car_type') == 'automatic' ? 'selected' : '' }}>ناقل أوتوماتيكي</option>
+                            <option value="electric" {{ old('car_type') == 'electric' ? 'selected' : '' }}>سيارة كهربائية</option>
+                        </select>
                     </div>
                 </div>
 
@@ -314,17 +336,18 @@
                     <div class="col-md-6 mb-3">
                         <div class="input-group">
                             <span class="input-group-text border-start-0"><i class="fas fa-user-clock"></i></span>
-                            <input type="number" name="age" class="form-control border-end-0" placeholder="العمر" value="{{ old('age') }}">
+                            <input type="number" name="age" class="form-control border-end-0" placeholder="أدخل العمر" min="18" max="80" value="{{ old('age') }}">
                         </div>
+                        <small class="form-text">العمر بالسنوات</small>
                     </div>
                 </div>
 
-                <div class="mb-3">
+                <!-- <div class="mb-3">
                     <div class="input-group">
                         <span class="input-group-text border-start-0"><i class="fas fa-hourglass-half"></i></span>
                         <input type="text" name="session_duration" class="form-control border-end-0" placeholder="مدة الجلسة" value="{{ old('session_duration') }}">
                     </div>
-                </div>
+                </div> -->
 
                 <div class="mb-3">
                     <div class="input-group">
@@ -339,9 +362,114 @@
                         <select name="session_time" class="form-select border-end-0">
                             <option value="">اختر وقت الجلسة</option>
                             <option value="morning" {{ old('session_time') == 'morning' ? 'selected' : '' }}>صباحاً</option>
-                            <option value="afternoon" {{ old('session_time') == 'afternoon' ? 'selected' : '' }}>مساءً</option>
-                            <option value="evening" {{ old('session_time') == 'evening' ? 'selected' : '' }}>مساءً متأخراً</option>
+                            <option value="afternoon" {{ old('session_time') == 'afternoon' ? 'selected' : '' }}>ظهراً</option>
+                            <option value="evening" {{ old('session_time') == 'evening' ? 'selected' : '' }}>مساءً</option>
                         </select>
+                    </div>
+                </div>
+
+                <!-- جدول التوافر -->
+                <div class="section-header mt-4 mb-3">جدول التوافر</div>
+                
+                <!-- أيام التوافر -->
+                <div class="mb-3">
+                    <label class="form-label">أيام التوافر</label>
+                    <div class="row g-2">
+                        <div class="col-auto">
+                            <div class="form-check">
+                                <input class="form-check-input available-day-checkbox" type="checkbox" id="day_sun" value="sunday" {{ old('available_days') && str_contains(old('available_days'), 'sunday') ? 'checked' : '' }}>
+                                <label class="form-check-label" for="day_sun">الأحد</label>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="form-check">
+                                <input class="form-check-input available-day-checkbox" type="checkbox" id="day_mon" value="monday" {{ old('available_days') && str_contains(old('available_days'), 'monday') ? 'checked' : '' }}>
+                                <label class="form-check-label" for="day_mon">الإثنين</label>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="form-check">
+                                <input class="form-check-input available-day-checkbox" type="checkbox" id="day_tue" value="tuesday" {{ old('available_days') && str_contains(old('available_days'), 'tuesday') ? 'checked' : '' }}>
+                                <label class="form-check-label" for="day_tue">الثلاثاء</label>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="form-check">
+                                <input class="form-check-input available-day-checkbox" type="checkbox" id="day_wed" value="wednesday" {{ old('available_days') && str_contains(old('available_days'), 'wednesday') ? 'checked' : '' }}>
+                                <label class="form-check-label" for="day_wed">الأربعاء</label>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="form-check">
+                                <input class="form-check-input available-day-checkbox" type="checkbox" id="day_thu" value="thursday" {{ old('available_days') && str_contains(old('available_days'), 'thursday') ? 'checked' : '' }}>
+                                <label class="form-check-label" for="day_thu">الخميس</label>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="form-check">
+                                <input class="form-check-input available-day-checkbox" type="checkbox" id="day_fri" value="friday" {{ old('available_days') && str_contains(old('available_days'), 'friday') ? 'checked' : '' }}>
+                                <label class="form-check-label" for="day_fri">الجمعة</label>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="form-check">
+                                <input class="form-check-input available-day-checkbox" type="checkbox" id="day_sat" value="saturday" {{ old('available_days') && str_contains(old('available_days'), 'saturday') ? 'checked' : '' }}>
+                                <label class="form-check-label" for="day_sat">السبت</label>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Hidden input to store comma-separated days -->
+                    <input type="hidden" name="available_days" id="available_days_hidden" value="{{ old('available_days') }}">
+                </div>
+                
+                <!-- ساعات التوافر -->
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <div class="input-group">
+                            <span class="input-group-text border-start-0" title="وقت بدء التوافر"><i class="fas fa-hourglass-start"></i></span>
+                            <input type="time" name="available_from" class="form-control border-end-0" placeholder="وقت بدء التوافر" value="{{ old('available_from') }}">
+                        </div>
+                        <small class="form-text">وقت بدء التوافر</small>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="input-group">
+                            <span class="input-group-text border-start-0" title="وقت انتهاء التوافر"><i class="fas fa-hourglass-end"></i></span>
+                            <input type="time" name="available_to" class="form-control border-end-0" placeholder="وقت انتهاء التوافر" value="{{ old('available_to') }}">
+                        </div>
+                        <small class="form-text">وقت انتهاء التوافر</small>
+                    </div>
+                </div>
+                
+                <!-- مدة الدرس ومدة الاستراحة -->
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <div class="input-group">
+                            <span class="input-group-text border-start-0" title="مدة الدرس"><i class="fas fa-stopwatch"></i></span>
+                            <select name="lesson_duration" class="form-select border-end-0">
+                                <option value="">اختر مدة الدرس</option>
+                                <option value="30" {{ old('lesson_duration') == '30' ? 'selected' : '' }}>30 دقيقة</option>
+                                <option value="45" {{ old('lesson_duration') == '45' ? 'selected' : '' }}>45 دقيقة</option>
+                                <option value="60" {{ old('lesson_duration') == '60' ? 'selected' : '' }}>60 دقيقة</option>
+                                <option value="90" {{ old('lesson_duration') == '90' ? 'selected' : '' }}>90 دقيقة</option>
+                                <option value="120" {{ old('lesson_duration') == '120' ? 'selected' : '' }}>120 دقيقة</option>
+                            </select>
+                        </div>
+                        <small class="form-text">مدة الدرس</small>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="input-group">
+                            <span class="input-group-text border-start-0" title="مدة الاستراحة"><i class="fas fa-mug-hot"></i></span>
+                            <select name="break_time_duration" class="form-select border-end-0">
+                                <option value="">اختر مدة الاستراحة</option>
+                                <option value="0" {{ old('break_time_duration') == '0' ? 'selected' : '' }}>0 دقيقة</option>
+                                <option value="10" {{ old('break_time_duration') == '10' ? 'selected' : '' }}>10 دقائق</option>
+                                <option value="15" {{ old('break_time_duration') == '15' ? 'selected' : '' }}>15 دقيقة</option>
+                                <option value="30" {{ old('break_time_duration') == '30' ? 'selected' : '' }}>30 دقيقة</option>
+                                <option value="45" {{ old('break_time_duration') == '45' ? 'selected' : '' }}>45 دقيقة</option>
+                                <option value="60" {{ old('break_time_duration') == '60' ? 'selected' : '' }}>60 دقيقة</option>
+                            </select>
+                        </div>
+                        <small class="form-text">مدة الاستراحة بين الدروس</small>
                     </div>
                 </div>
 
@@ -425,6 +553,57 @@
         let traineeFields = document.getElementById('traineeFields');
         let trainingCenterFields = document.getElementById('trainingCenterFields');
 
+        // Handle available days checkboxes
+        const dayCheckboxes = document.querySelectorAll('.available-day-checkbox');
+        const availableDayHidden = document.getElementById('available_days_hidden');
+        
+        // Check if the hidden field was found
+        if (!availableDayHidden) {
+            console.error('Error: Cannot find hidden field with ID "available_days_hidden"!');
+            // Try to find by name instead
+            const availableDaysFields = document.getElementsByName('available_days');
+            if (availableDaysFields.length > 0) {
+                console.log('Found field by name instead:', availableDaysFields[0]);
+            } else {
+                console.error('Could not find any field with name "available_days" either!');
+            }
+        } else {
+            console.log('Hidden field found successfully:', availableDayHidden);
+        }
+
+        // Function to update the hidden field with selected days
+        function updateAvailableDays() {
+            const selectedDays = [];
+            dayCheckboxes.forEach(checkbox => {
+                if (checkbox.checked) {
+                    selectedDays.push(checkbox.value);
+                }
+            });
+            availableDayHidden.value = selectedDays.join(',');
+            console.log('Available days updated to:', availableDayHidden.value);
+            console.log('Hidden field element:', availableDayHidden);
+            console.log('Hidden field name:', availableDayHidden.name);
+            console.log('Hidden field value:', availableDayHidden.value);
+        }
+
+        // Add event listeners to checkboxes
+        dayCheckboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', updateAvailableDays);
+        });
+
+        // Initialize on page load (to handle old values)
+        updateAvailableDays();
+        
+        // Set checkboxes based on hidden field value (for old values)
+        if (availableDayHidden.value) {
+            const oldSelectedDays = availableDayHidden.value.split(',');
+            dayCheckboxes.forEach(checkbox => {
+                if (oldSelectedDays.includes(checkbox.value)) {
+                    checkbox.checked = true;
+                }
+            });
+        }
+
         function toggleRoleFields() {
             let selectedRole = roleSelect.value;
 
@@ -451,24 +630,45 @@
         let form = document.getElementById('registerForm');
         form.addEventListener('submit', function(e) {
             e.preventDefault();
+            
+            // Update hidden field value before submitting
+            updateAvailableDays();
 
             let formData = new FormData(form);
+            
+            // Ensure available_days is in the FormData
+            if (!formData.has('available_days') && availableDayHidden) {
+                console.log('Adding available_days field to FormData manually');
+                formData.append('available_days', availableDayHidden.value);
+            }
+            
+            // Debug: Log all form data
+            console.log('Form data before submission:');
+            for (let pair of formData.entries()) {
+                console.log(pair[0] + ': ' + pair[1]);
+            }
 
             // إرسال البيانات باستخدام Fetch API
             fetch(form.action, {
                     method: 'POST',
                     body: formData,
                 })
-                .then(response => response.json())
+                .then(response => {
+                    console.log('Response received:', response);
+                    return response.json();
+                })
                 .then(data => {
+                    console.log('Response data:', data);
                     if (data.success) {
                         toastr.success(data.message); // عرض رسالة توستر عند نجاح التسجيل
                         form.reset(); // مسح النموذج بعد النجاح
                     } else {
+                        console.error('Server reported error:', data.message);
                         toastr.error(data.message); // عرض رسالة خطأ عند فشل التسجيل
                     }
                 })
                 .catch(error => {
+                    console.error('Fetch error:', error);
                     toastr.error('حدث خطأ أثناء إرسال البيانات');
                 });
         });

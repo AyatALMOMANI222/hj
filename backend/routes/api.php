@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\DrivingLessonController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\RatingController;
 use App\Http\Controllers\RatingResponseController;
 use App\Http\Controllers\UserController;
@@ -20,6 +21,10 @@ Route::post('/register', action: [UserController::class, 'store']);
 Route::post('/login', action: [AuthController::class, 'login']);
 Route::get('/user/profile', [AuthController::class, 'userProfile'])->middleware('auth:sanctum');
 Route::post('/users', action: [UserController::class, 'getUsers']);
+
+Route::post('/user/update/{id}', action: [UserController::class, 'update'])->middleware('auth:sanctum');
+
+
 Route::delete('/user/{id}',action:[UserController::class , 'destroy'])->middleware(['auth:sanctum','admin']);
 // Route::delete('/floor/delete/{id}', [StandardBoothPackageController::class, 'deleteById'])->middleware(['auth:sanctum', 'admin']);
 
@@ -36,6 +41,11 @@ Route::get('/rating/avg/{id}', action:[RatingController::class,'getAvgRatingByTr
 
 
 Route::get('/user/{type}',action:[UserController::class,'getUserByType'] );
+Route::get('/user/token/2',action:[UserController::class,'getAuthenticatedUser'] )->middleware('auth:sanctum');
+
+
+
+
 
 
 // cources
@@ -67,7 +77,7 @@ Route::get('/lesson/instructor',action:[DrivingLessonController::class , 'getDri
 
 
 // Booking 
-Route::post('/booking',action:[BookingController::class,'store'])->middleware('auth:sanctum');
+Route::post('/booking', [App\Http\Controllers\BookingController::class, 'store'])->middleware('auth:sanctum')->name('booking.store');
 Route::delete('/booking/{id}',action:[BookingController::class,'deleteBooking'])->middleware('auth:sanctum');
 Route::put('/booking/{id}',action:[BookingController::class,'update'])->middleware('auth:sanctum');
 
@@ -81,3 +91,12 @@ Route::get('/rating/response/{rating_id}',action:[RatingResponseController::clas
 Route::get('/rating/res/user',action:[RatingResponseController::class,'getResponsesByUser'])->middleware('auth:sanctum');
 Route::put('/update/res/{response_id}',action:[RatingResponseController::class,'updateResponse'])->middleware('auth:sanctum');
 Route::delete('/delete/res/{response_id}',action:[RatingResponseController::class,'deleteResponse'])->middleware('auth:sanctum');
+// User Profile API Route
+Route::middleware('auth:sanctum')->get('/user/profile/{id}', [App\Http\Controllers\UserController::class, 'getUserById']);
+
+
+// notification 
+Route::get('/notification',action:[NotificationController::class,'getAllNotificationByUserId'])->middleware('auth:sanctum');
+
+
+Route::get('/booking/{trainerId}/{date}',action:[BookingController::class,'getTrainerAvailableSessions']);

@@ -114,7 +114,7 @@
     }
    </style>
 </head>
-<body class="d-flex justify-content-center align-items-center vh-100">
+<body class="d-flex justify-content-center align-items-center vh-100" data-page="login">
 
     <div class="card p-4" style="width: 450px;">
         <h3 class="text-center text-primary mb-4">تسجيل الدخول إلى حسابك</h3>
@@ -173,11 +173,15 @@
 
                     toastr.success(data.message); // Display success toast
                     console.log(data.user.is_admin);
-                    if (data.user.is_admin == 1) {
-        window.location.href = "{{ route('admin') }}"; // توجيه الأدمن إلى لوحة التحكم
-    } else {
-        window.location.href = "{{ route('register.view') }}"; // توجيه المستخدم العادي إلى الصفحة الرئيسية
-    }
+                    
+                    
+                    if (data.user.is_admin === 1) {
+                        window.location.href = "{{ route('admin') }}"; // توجيه الأدمن إلى لوحة التحكم
+                    } else if (data.user.role === "trainee") {
+                        window.location.href = "{{ route('profile') }}"; // توجيه المتدرب إلى صفحة المدربين
+                    } else {
+                        window.location.href = "{{ route('profile') }}"; // توجيه المستخدم العادي إلى صفحة التسجيل
+                    }
                     
                 } else {
                     toastr.error(data.message); // Display error toast

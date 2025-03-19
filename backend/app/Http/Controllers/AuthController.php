@@ -46,6 +46,7 @@ class AuthController extends Controller
                     'created_at' => $user->created_at,
                     'updated_at' => $user->updated_at,
                     'is_admin' => $user->is_admin,
+                    'role' => $user->role,
                 ],
             ]);
         } catch (\Exception $e) {
